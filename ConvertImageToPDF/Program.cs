@@ -105,7 +105,7 @@ namespace ConvertImageToPDF
                 Console.WriteLine("Begin ocr engine .....");
                 try
                 {
-                    ocrDocument.Save(args[0] + i * perImage + ".pdf", Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf, null);
+                    ocrDocument.Save(files[i] + i * perImage + ".pdf", Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf, null);
                     Console.WriteLine("finish this group image");
                 }
                 catch(Exception e)
