@@ -72,6 +72,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\leadtools\Bin\Dotnet4\Win32\Leadtools.Codecs.Jpm.dll</HintPath>
     </Reference>
+    <Reference Include="Leadtools.Codecs.Raw, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\LEADTOOLS 19\Bin\Dotnet4\Win32\Leadtools.Codecs.Raw.dll</HintPath>
+    </Reference>
     <Reference Include="Leadtools.Codecs.Tif, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\leadtools\Bin\Dotnet4\Win32\Leadtools.Codecs.Tif.dll</HintPath>

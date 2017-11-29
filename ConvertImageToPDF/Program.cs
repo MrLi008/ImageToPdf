@@ -16,7 +16,7 @@ namespace ConvertImageToPDF
         private static IOcrEngine ocrEngine;
         static void Main(string[] args)
         {
-            // args = new string[2] {  @"test", @"test" };
+           // args = new string[2] {  @"test", @"test" };
             for (int i = 0; i < args.Length; i++)
             {
                 Console.WriteLine("args: " + args[i]);
@@ -49,54 +49,72 @@ namespace ConvertImageToPDF
             {
                 for (int i = 0; i < args.Length; i++)
                 {
-                    if (File.Exists(args[i])){
+                    if (File.Exists(args[i]) && IsPicture(args[i])){
                         files.Add(args[i]);
                     }
                 }
 
             }
             int filelength = files.ToArray<string>().Length;
-            for (int i=0; i<filelength; i++)
+            Console.WriteLine("file count: " + filelength);
+            //for (int i=0; i<filelength; i++)
+            //{
+            //    Console.WriteLine("the file: " + files[i]);
+            //    try
+            //    {
+            //        AutoRecongizeManage(files[i] + ".pdf", files[i]);
+
+            //        Console.WriteLine("success...");
+            //    }catch (AccessViolationException e)
+            //    {
+            //        Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            //    }
+            //    catch(OcrException e)
+            //    {
+            //        Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            //    }catch(IOException e)
+            //    {
+            //        Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            //    }
+            //    finally
+            //    {
+            //        Console.WriteLine("end.." + files[i] + ".pdf-----------------" + i);
+            //    }
+            //}
+            int perImage = 5;
+
+            IOcrDocument ocrDocument;
+            for (int i = 0; i <= filelength / perImage; i++)
             {
-                Console.WriteLine("the file: " + files[i]);
+                int rest = filelength - i * perImage;
+                ocrDocument = ocrEngine.DocumentManager.CreateDocument();
+                if (rest > perImage)
+                {
+                    rest = 5;
+                }
+                for (int j = 0; j < rest; j++)
+                {
+                    int index = i * perImage + j;
+                    Console.WriteLine("at..." + index);
+                    exe_ocr(files[index], ocrDocument);
+                }
+                Console.WriteLine("Begin ocr engine .....");
                 try
                 {
-                    AutoRecongizeManage(files[i] + ".pdf", files[i]);
+                    ocrDocument.Save(args[0] + i * perImage + ".pdf", Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf, null);
+                    Console.WriteLine("finish this group image");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Error when saving image as pdf type" + e);
+                }
 
-                    Console.WriteLine("success...");
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
-                }
-                finally
-                {
-                    Console.WriteLine("end.." + files[i] + ".pdf");
-                }
+
             }
-            //int perImage = 5;
-
-            // IOcrDocument ocrDocument;
-            //for (int i = 0; i < filelength/ perImage; i++ )
-            //{
-            //    int rest = filelength - i * perImage;
-            //    ocrDocument = ocrEngine.DocumentManager.CreateDocument();
-            //    if ( rest > perImage)
-            //    {
-            //        rest = 5;
-            //    }
-            //    for (int j = 0; j < rest; j++)
-            //    {
-            //        int index = i * perImage + j;
-            //        Console.WriteLine("at..." + index);
-            //        exe_ocr(files[index], ocrDocument);
-            //    }
-            //    Console.WriteLine("Begin ocr engine .....");
-            //    ocrDocument.Save(args[0] + i* perImage + ".pdf", Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf, null);
-            //    Console.WriteLine("finish this group image");
-
-
-            //}
 
             ocrEngine.Shutdown();
             Console.Write("end ocr engine with result file: " + args[0] + ".pdf\nPress any key to continue...");
@@ -120,13 +138,31 @@ namespace ConvertImageToPDF
         }
         private static void AutoRecongizeManage(string outfile, string infile)
         {
-            
-            ocrEngine.AutoRecognizeManager.Run(
-                infile,
-                outfile,
-                null,
-                Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf,
-                null);
+            try
+            {
+                ocrEngine.AutoRecognizeManager.Run(
+                    infile,
+                    outfile,
+                    null,
+                    Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf,
+                    null);
+            }
+            catch (AccessViolationException e)
+            {
+                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            }
+            catch (OcrException e)
+            {
+                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+            }
         }
     
         public static void SetLicense()
@@ -142,6 +178,39 @@ namespace ConvertImageToPDF
             //下面只是注册License的其中一中方式
             byte[] licenseBuffer = ASCIIEncoding.ASCII.GetBytes(p_Lic.ToCharArray());
             RasterSupport.SetLicense(licenseBuffer, p_Key);
+        }
+        private static bool IsPicture(string filePath)//filePath是文件的完整路径   
+        {
+            try
+            {
+                FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                BinaryReader reader = new BinaryReader(fs);
+                string fileClass;
+                byte buffer;
+                byte[] b = new byte[2];
+                buffer = reader.ReadByte();
+                b[0] = buffer;
+                fileClass = buffer.ToString();
+                buffer = reader.ReadByte();
+                b[1] = buffer;
+                fileClass += buffer.ToString();
+
+
+                reader.Close();
+                fs.Close();
+                if (fileClass == "255216 " || fileClass == "7173" || fileClass == "13780")//255216是jpg;7173是gif;6677是BMP,13780是PNG;7790是exe,8297是rar   
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
