@@ -17,11 +17,12 @@ namespace ConvertImageToPDF
         static void Main(string[] args)
         {
            // args = new string[2] {  @"test", @"test" };
+            args = new string[1] { @"1510583968646.jpg" };
             for (int i = 0; i < args.Length; i++)
             {
                 Console.WriteLine("args: " + args[i]);
             }
-            if (args.Length <= 1)
+            if (args.Length < 1)
             {
                 Console.WriteLine(@"provide at least two args: new filename and imagefilename or imagefileroot");
                 return;
@@ -41,7 +42,7 @@ namespace ConvertImageToPDF
            
             Console.WriteLine(@"load all Pics");
             List<string> files = new List<string>();
-            if (Directory.Exists(args[1]))
+            if (args.Length > 1 && Directory.Exists(args[1]))
             {
                  files = Directory.GetFiles(args[1], "*.JPG", SearchOption.AllDirectories).ToList<string>();
             }
@@ -199,7 +200,7 @@ namespace ConvertImageToPDF
                 reader.Close();
                 fs.Close();
                 Console.WriteLine(fileClass);
-                if (fileClass == "255216 " || fileClass == "7173" || fileClass == "13780")//255216是jpg;7173是gif;6677是BMP,13780是PNG;7790是exe,8297是rar   
+                if (fileClass == "255216" || fileClass == "7173" || fileClass == "13780")//255216是jpg;7173是gif;6677是BMP,13780是PNG;7790是exe,8297是rar   
                 {
                     return true;
                 }
