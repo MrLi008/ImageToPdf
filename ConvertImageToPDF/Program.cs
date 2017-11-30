@@ -198,6 +198,7 @@ namespace ConvertImageToPDF
 
                 reader.Close();
                 fs.Close();
+                Console.WriteLine(fileClass);
                 if (fileClass == "255216 " || fileClass == "7173" || fileClass == "13780")//255216是jpg;7173是gif;6677是BMP,13780是PNG;7790是exe,8297是rar   
                 {
                     return true;
