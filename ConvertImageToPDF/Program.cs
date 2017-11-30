@@ -16,7 +16,7 @@ namespace ConvertImageToPDF
         private static IOcrEngine ocrEngine;
         static void Main(string[] args)
         {
-            args = new string[2] {  @"test", @"test" };
+           // args = new string[2] {  @"test", @"test" };
             for (int i = 0; i < args.Length; i++)
             {
                 Console.WriteLine("args: " + args[i]);
