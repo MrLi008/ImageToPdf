@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Leadtools;
 using Leadtools.Codecs;
 using Leadtools.ImageProcessing;
@@ -16,12 +17,13 @@ namespace ConvertImageToPDF
         private static IOcrEngine ocrEngine;
         static void Main(string[] args)
         {
+            System.Threading.Thread.GetDomain().UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            
             run(args);
         }
         private static void run(string[] args)
         {
-
-            try
+           try
             {
                 process(args);
             }
@@ -34,14 +36,20 @@ namespace ConvertImageToPDF
                 Console.WriteLine("stop");
             }
         }
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine("error");
+            Console.ReadKey();
+            Environment.Exit(-1);
+        }
         private static void process(string[] args)
         { 
             // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
             //args = new string[1] { @"1510583968646.jpg" };
-            //args = new string[1]
+            //args = new string[2]
             //{
-            // //   @"C:\Users\lenovo\Desktop\测试案卷\王小斌盗窃案电子案卷\image00069.JPG",
-            //    @"C:\Users\lenovo\Desktop\测试案卷\王小斌盗窃案电子案卷\image00069.JPG"
+            //   @"D:\ocrengine\test",
+            //    @"D:\ocrengine\test"
             //};
             for (int i = 0; i < args.Length; i++)
             {
