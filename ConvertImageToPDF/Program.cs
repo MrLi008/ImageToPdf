@@ -16,8 +16,13 @@ namespace ConvertImageToPDF
         private static IOcrEngine ocrEngine;
         static void Main(string[] args)
         {
-            //args = new string[2] {  @"test", @"test" };
+            // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
             //args = new string[1] { @"1510583968646.jpg" };
+            //args = new string[1]
+            //{
+            // //   @"C:\Users\lenovo\Desktop\测试案卷\王小斌盗窃案电子案卷\image00069.JPG",
+            //    @"C:\Users\lenovo\Desktop\测试案卷\王小斌盗窃案电子案卷\image00069.JPG"
+            //};
             for (int i = 0; i < args.Length; i++)
             {
                 Console.WriteLine("args: " + args[i]);
@@ -86,37 +91,52 @@ namespace ConvertImageToPDF
             //        Console.WriteLine("end.." + files[i] + ".pdf-----------------" + i);
             //    }
             //}
-            int perImage = 5;
-
-            IOcrDocument ocrDocument;
-            for (int i = 0; i <= filelength / perImage; i++)
+            int perImage = 1;
+            try
             {
-                int rest = filelength - i * perImage;
-                ocrDocument = ocrEngine.DocumentManager.CreateDocument();
-                if (rest > perImage)
+                IOcrDocument ocrDocument;
+                for (int i = 0; i <= filelength / perImage; i++)
                 {
-                    rest = 5;
-                }
-                for (int j = 0; j < rest; j++)
-                {
-                    int index = i * perImage + j;
-                    Console.WriteLine("at..." + index);
-                    exe_ocr(files[index], ocrDocument);
-                }
-                Console.WriteLine("Begin ocr engine .....");
-                try
-                {
-                    ocrDocument.Save(files[i] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
-                    Console.WriteLine("finish this group image");
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine("Error when saving image as pdf type" + e);
-                }
+                    int rest = filelength - i * perImage;
 
+                    ocrDocument = ocrEngine.DocumentManager.CreateDocument();
+                    if (rest > perImage)
+                    {
+                        rest = perImage;
+                    }
+                    for (int j = 0; j < rest; j++)
+                    {
+                        int index = i * perImage + j;
+                        Console.WriteLine("at..." + index);
+                        exe_ocr(files[index], ocrDocument);
+                    }
+                    Console.WriteLine("Begin ocr engine .....");
+                    try
+                    {
+                        ocrDocument.Save(files[i] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
+                        Console.WriteLine("finish this group image");
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Error when saving image as pdf type" + e);
+                        // Console.ReadKey();
+                    }
+                    finally
+                    {
+                        Console.WriteLine("...." + i);
+                    }
+
+                }
 
             }
-
+            catch(Exception e)
+            {
+                Console.WriteLine("Error when saving image as pdf type" + e);
+            }
+            finally
+            {
+                Console.WriteLine("....");
+            }
             ocrEngine.Shutdown();
             Console.Write("end ocr engine with result file: " + args[0] + ".pdf\nPress any key to continue...");
            //  Console.ReadKey();
