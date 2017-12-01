@@ -16,8 +16,8 @@ namespace ConvertImageToPDF
         private static IOcrEngine ocrEngine;
         static void Main(string[] args)
         {
-           // args = new string[2] {  @"test", @"test" };
-            args = new string[1] { @"1510583968646.jpg" };
+            //args = new string[2] {  @"test", @"test" };
+            //args = new string[1] { @"1510583968646.jpg" };
             for (int i = 0; i < args.Length; i++)
             {
                 Console.WriteLine("args: " + args[i]);
@@ -106,7 +106,7 @@ namespace ConvertImageToPDF
                 Console.WriteLine("Begin ocr engine .....");
                 try
                 {
-                    ocrDocument.Save(files[i] + i * perImage + ".pdf", Leadtools.Forms.DocumentWriters.DocumentFormat.Pdf, null);
+                    ocrDocument.Save(files[i] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
                     Console.WriteLine("finish this group image");
                 }
                 catch(Exception e)
@@ -171,9 +171,9 @@ namespace ConvertImageToPDF
             string p_Lic, p_Key;
             //1、读取License文件
             //License文件夹被我放到Debug文件夹和Release文件夹里，可以根据需要变更文件路径
-            System.IO.TextReader reader = System.IO.File.OpenText(@"License\full_license.key");
+            System.IO.TextReader reader = System.IO.File.OpenText(@"D:\ocrengine\License\full_license.key");
             p_Key = reader.ReadLine();
-            reader = System.IO.File.OpenText(@"License\full_license.lic");
+            reader = System.IO.File.OpenText(@"D:\ocrengine\License\full_license.lic");
             p_Lic = reader.ReadToEnd();
 
             //下面只是注册License的其中一中方式
