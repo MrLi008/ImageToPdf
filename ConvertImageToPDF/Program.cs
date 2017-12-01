@@ -16,6 +16,26 @@ namespace ConvertImageToPDF
         private static IOcrEngine ocrEngine;
         static void Main(string[] args)
         {
+            run(args);
+        }
+        private static void run(string[] args)
+        {
+
+            try
+            {
+                process(args);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(".....哈哈, 报错啦");
+            }
+            finally
+            {
+                Console.WriteLine("stop");
+            }
+        }
+        private static void process(string[] args)
+        { 
             // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
             //args = new string[1] { @"1510583968646.jpg" };
             //args = new string[1]
