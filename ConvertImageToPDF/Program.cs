@@ -43,13 +43,13 @@ namespace ConvertImageToPDF
             Environment.Exit(-1);
         }
         private static void process(string[] args)
-        { 
+        {
             // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
             //args = new string[1] { @"1510583968646.jpg" };
             //args = new string[2]
             //{
-            //   @"D:\ocrengine\test",
-            //    @"D:\ocrengine\test"
+            //   @"d:\ocrengine\test",
+            //    @"d:\ocrengine\test"
             //};
             for (int i = 0; i < args.Length; i++)
             {
@@ -60,6 +60,7 @@ namespace ConvertImageToPDF
                 Console.WriteLine(@"provide at least two args: new filename and imagefilename or imagefileroot");
                 return;
             }
+            // begin
             SetLicense();
             ocrEngine = OcrEngineManager.CreateEngine(OcrEngineType.Professional, false);
             ocrEngine.Startup(null, null, null, null);
@@ -125,6 +126,7 @@ namespace ConvertImageToPDF
                 IOcrDocument ocrDocument;
                 for (int i = 0; i <= filelength / perImage; i++)
                 {
+                    int index = 0;
                     int rest = filelength - i * perImage;
 
                     ocrDocument = ocrEngine.DocumentManager.CreateDocument();
@@ -134,14 +136,18 @@ namespace ConvertImageToPDF
                     }
                     for (int j = 0; j < rest; j++)
                     {
-                        int index = i * perImage + j;
+                        index = i * perImage + j;
+                        if (index >= filelength)
+                        {
+                            break;
+                        }
                         Console.WriteLine("at..." + index);
                         exe_ocr(files[index], ocrDocument);
                     }
                     Console.WriteLine("Begin ocr engine .....");
                     try
                     {
-                        ocrDocument.Save(files[i] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
+                        ocrDocument.Save(files[index] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
                         Console.WriteLine("finish this group image");
                     }
                     catch (Exception e)
@@ -152,6 +158,7 @@ namespace ConvertImageToPDF
                     finally
                     {
                         Console.WriteLine("...." + i);
+                        ocrDocument.Dispose();
                     }
 
                 }
@@ -165,21 +172,41 @@ namespace ConvertImageToPDF
             {
                 Console.WriteLine("....");
             }
-            ocrEngine.Shutdown();
-            Console.Write("end ocr engine with result file: " + args[0] + ".pdf\nPress any key to continue...");
-           //  Console.ReadKey();
-           
+            try
+            {
+                ocrEngine.Shutdown();
+                Console.Write("end ocr engine with result file: " + args[0] + ".pdf\nPress any key to continue...");
+                //  Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("err with shutdown");
+            }
+            finally
+            {
+                if (ocrEngine != null)
+                {
+                    ocrEngine.Dispose();
+                }
+            }
         }
         public static void exe_ocr(string filename, IOcrDocument ocrDocument)
         {
             Console.WriteLine(filename);
             try
             {
+                RasterCodecs rasterCodecs = new RasterCodecs();
+                RasterImage rasterImage = rasterCodecs.Load(filename);
+                
 
-                ocrDocument.Pages.AddPage(filename, null);
+                IOcrPage page = ocrDocument.Pages.AddPage(rasterImage, null);
+                if (page != null)
+                {
+                    page.UpdateNativeFillMethod();
+                    page.Recognize(null);
+                }
 
-                ocrDocument.Pages.AutoZone(null);
-                ocrDocument.Pages.Recognize(null);
+                // ocrDocument.Pages.zon(NativeOcrZoneType.AutoGraphic);
             }catch(Exception e)
             {
                 Console.WriteLine("add image faild: " + e);
