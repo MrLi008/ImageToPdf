@@ -104,6 +104,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\leadtools\Bin\Dotnet4\Win32\Leadtools.Forms.SpellCheckers.Hunspell.dll</HintPath>
     </Reference>
+    <Reference Include="Leadtools.ImageProcessing.Core, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\leadtools\Bin\Dotnet4\Win32\Leadtools.ImageProcessing.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Leadtools.WinForms, Version=19.0.4.0, Culture=neutral, PublicKeyToken=9cf889f53ea9b907, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\leadtools\Bin\Dotnet4\Win32\Leadtools.WinForms.dll</HintPath>
