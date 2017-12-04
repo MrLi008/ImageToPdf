@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Leadtools;
 using Leadtools.Codecs;
 using Leadtools.ImageProcessing;
+using Leadtools.ImageProcessing.Core;
 using Leadtools.Forms.Ocr;
 
 namespace ConvertImageToPDF
@@ -193,11 +194,14 @@ namespace ConvertImageToPDF
         public static void exe_ocr(string filename, IOcrDocument ocrDocument)
         {
             Console.WriteLine(filename);
+            RasterCodecs rasterCodecs = null;
+            RasterImage rasterImage = null;
             try
             {
-                RasterCodecs rasterCodecs = new RasterCodecs();
-                RasterImage rasterImage = rasterCodecs.Load(filename);
-                
+                rasterCodecs = new RasterCodecs();
+                rasterImage = rasterCodecs.Load(filename);
+                AutoBinarizeCommand command = new AutoBinarizeCommand();
+                command.Run(rasterImage);
 
                 IOcrPage page = ocrDocument.Pages.AddPage(rasterImage, null);
                 if (page != null)
@@ -210,6 +214,17 @@ namespace ConvertImageToPDF
             }catch(Exception e)
             {
                 Console.WriteLine("add image faild: " + e);
+            }
+            finally
+            {
+                if (rasterCodecs != null)
+                {
+                    rasterCodecs.Dispose();
+                }
+                if (rasterImage != null)
+                {
+                    rasterImage.Dispose();
+                }
             }
         }
         private static void AutoRecongizeManage(string outfile, string infile)
