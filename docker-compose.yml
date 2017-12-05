@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  convertimagetopdf:
+    image: convertimagetopdf
+    build:
+      context: .\ConvertImageToPDF
+      dockerfile: Dockerfile

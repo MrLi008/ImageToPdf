@@ -30,17 +30,18 @@ namespace ConvertImageToPDF
             }
             catch (Exception e)
             {
-                Console.WriteLine(".....哈哈, 报错啦");
+                Console.WriteLine("..." + e);
+                //Console.WriteLine(".....哈哈, 报错啦");
             }
             finally
             {
-                Console.WriteLine("stop");
+                //Console.WriteLine("stop");
             }
         }
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Console.WriteLine("error");
-            Console.ReadKey();
+           // Console.WriteLine("error");
+            //Console.ReadKey();
             Environment.Exit(-1);
         }
         private static void process(string[] args)
@@ -54,7 +55,7 @@ namespace ConvertImageToPDF
             //};
             for (int i = 0; i < args.Length; i++)
             {
-                Console.WriteLine("args: " + args[i]);
+               // Console.WriteLine("args: " + args[i]);
             }
             if (args.Length < 1)
             {
@@ -75,7 +76,7 @@ namespace ConvertImageToPDF
 				});
 
            
-            Console.WriteLine(@"load all Pics");
+            //Console.WriteLine(@"load all Pics");
             List<string> files = new List<string>();
             if (args.Length > 1 && Directory.Exists(args[1]))
             {
@@ -142,14 +143,14 @@ namespace ConvertImageToPDF
                         {
                             break;
                         }
-                        Console.WriteLine("at..." + index);
+                       // Console.WriteLine("at..." + index);
                         exe_ocr(files[index], ocrDocument);
                     }
                     Console.WriteLine("Begin ocr engine .....");
                     try
                     {
                         ocrDocument.Save(files[index] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
-                        Console.WriteLine("finish this group image");
+                       // Console.WriteLine("finish this group image");
                     }
                     catch (Exception e)
                     {
@@ -158,7 +159,7 @@ namespace ConvertImageToPDF
                     }
                     finally
                     {
-                        Console.WriteLine("...." + i);
+                      //  Console.WriteLine("...." + i);
                         ocrDocument.Dispose();
                     }
 
@@ -167,21 +168,21 @@ namespace ConvertImageToPDF
             }
             catch(Exception e)
             {
-                Console.WriteLine("Error when saving image as pdf type" + e);
+             //   Console.WriteLine("Error when saving image as pdf type" + e);
             }
             finally
             {
-                Console.WriteLine("....");
+            //    Console.WriteLine("....");
             }
             try
             {
                 ocrEngine.Shutdown();
-                Console.Write("end ocr engine with result file: " + args[0] + ".pdf\nPress any key to continue...");
+           //     Console.Write("end ocr engine with result file: " + args[0] + ".pdf\nPress any key to continue...");
                 //  Console.ReadKey();
             }
             catch (Exception e)
             {
-                Console.WriteLine("err with shutdown");
+            //    Console.WriteLine("err with shutdown");
             }
             finally
             {
@@ -213,7 +214,7 @@ namespace ConvertImageToPDF
                 // ocrDocument.Pages.zon(NativeOcrZoneType.AutoGraphic);
             }catch(Exception e)
             {
-                Console.WriteLine("add image faild: " + e);
+            //    Console.WriteLine("add image faild: " + e);
             }
             finally
             {
@@ -240,19 +241,19 @@ namespace ConvertImageToPDF
             }
             catch (AccessViolationException e)
             {
-                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+           //     Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
             }
             catch (OcrException e)
             {
-                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+          //      Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
             }
             catch (IOException e)
             {
-                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+           //     Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
             }
             catch (Exception e)
             {
-                Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
+          //      Console.WriteLine("faild!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e);
             }
         }
     
@@ -289,7 +290,7 @@ namespace ConvertImageToPDF
 
                 reader.Close();
                 fs.Close();
-                Console.WriteLine(fileClass);
+              //  Console.WriteLine(fileClass);
                 if (fileClass == "255216" || fileClass == "7173" || fileClass == "13780")//255216是jpg;7173是gif;6677是BMP,13780是PNG;7790是exe,8297是rar   
                 {
                     return true;
