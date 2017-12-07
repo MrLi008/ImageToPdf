@@ -122,7 +122,7 @@ namespace ConvertImageToPDF
             //        Console.WriteLine("end.." + files[i] + ".pdf-----------------" + i);
             //    }
             //}
-            int perImage = 1;
+            int perImage = 5;
             try
             {
                 IOcrDocument ocrDocument;
@@ -145,6 +145,10 @@ namespace ConvertImageToPDF
                         }
                        // Console.WriteLine("at..." + index);
                         exe_ocr(files[index], ocrDocument);
+                    }
+                    if(index >= filelength)
+                    {
+                        break;
                     }
                     Console.WriteLine("Begin ocr engine ....." + files[index] + i * perImage + ".html");
                     try
