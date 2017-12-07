@@ -146,7 +146,7 @@ namespace ConvertImageToPDF
                        // Console.WriteLine("at..." + index);
                         exe_ocr(files[index], ocrDocument);
                     }
-                    Console.WriteLine("Begin ocr engine .....");
+                    Console.WriteLine("Begin ocr engine ....." + files[index] + i * perImage + ".html");
                     try
                     {
                         ocrDocument.Save(files[index] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
