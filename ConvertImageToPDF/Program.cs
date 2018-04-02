@@ -46,13 +46,13 @@ namespace ConvertImageToPDF
         }
         private static void process(string[] args)
         {
-            // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
-            //args = new string[1] { @"1510583968646.jpg" };
-            //args = new string[2]
-            //{
-            //    @"d:\ocrengine\test",
-            //    @"d:\ocrengine\test"
-            //};
+           // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
+           // args = new string[1] { @"1510583968646.jpg" };
+            args = new string[2]
+            {
+                @"d:\ocrengine\test",
+                @"d:\ocrengine\test"
+            };
             for (int i = 0; i < args.Length; i++)
             {
                // Console.WriteLine("args: " + args[i]);
@@ -122,7 +122,7 @@ namespace ConvertImageToPDF
             //        Console.WriteLine("end.." + files[i] + ".pdf-----------------" + i);
             //    }
             //}
-            int perImage = 5;
+            int perImage = 1;
             try
             {
                 IOcrDocument ocrDocument;
