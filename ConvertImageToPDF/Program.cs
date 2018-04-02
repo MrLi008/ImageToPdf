@@ -204,9 +204,13 @@ namespace ConvertImageToPDF
             try
             {
                 rasterCodecs = new RasterCodecs();
+                rasterCodecs.ThrowExceptionsOnInvalidImages = false;
                 rasterImage = rasterCodecs.Load(filename);
                 AutoBinarizeCommand command = new AutoBinarizeCommand();
                 command.Run(rasterImage);
+
+                AutoLineRemoveCommand commandLine = new AutoLineRemoveCommand();
+                commandLine.Run(rasterImage);
 
                 IOcrPage page = ocrDocument.Pages.AddPage(rasterImage, null);
                 if (page != null)
