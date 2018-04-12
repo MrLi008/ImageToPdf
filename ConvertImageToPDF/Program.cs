@@ -270,9 +270,9 @@ namespace ConvertImageToPDF
             string p_Lic, p_Key;
             //1、读取License文件
             //License文件夹被我放到Debug文件夹和Release文件夹里，可以根据需要变更文件路径
-            System.IO.TextReader reader = System.IO.File.OpenText(@"D:\ocrengine\License\full_license.key");
+            System.IO.TextReader reader = System.IO.File.OpenText(@"License\full_license.key");
             p_Key = reader.ReadLine();
-            reader = System.IO.File.OpenText(@"D:\ocrengine\License\full_license.lic");
+            reader = System.IO.File.OpenText(@"License\full_license.lic");
             p_Lic = reader.ReadToEnd();
 
             //下面只是注册License的其中一中方式
