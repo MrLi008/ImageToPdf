@@ -3,7 +3,6 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using Leadtools;
 using Leadtools.Codecs;
@@ -46,12 +45,12 @@ namespace ConvertImageToPDF
         }
         private static void process(string[] args)
         {
-           // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
-           // args = new string[1] { @"1510583968646.jpg" };
+            //args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
+            // args = new string[1] { @"1510583968646.jpg" };
             //args = new string[2]
             //{
-            //    @"d:\ocrengine\test",
-            //    @"d:\ocrengine\test"
+            //    @"..\test",
+            //    @"..\test"
             //};
             for (int i = 0; i < args.Length; i++)
             {
