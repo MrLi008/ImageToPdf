@@ -45,17 +45,17 @@ namespace ConvertImageToPDF
         }
         private static void process(string[] args)
         {
-            //args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
+            // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
             // args = new string[1] { @"1510583968646.jpg" };
             //args = new string[2]
             //{
             //    @"..\test",
             //    @"..\test"
             //};
-            for (int i = 0; i < args.Length; i++)
-            {
-                Console.WriteLine("args: " + args[i]);
-            }
+            //for (int i = 0; i < args.Length; i++)
+            //{
+                //Console.WriteLine("args: " + args[i]);
+            //}
             if (args.Length < 1)
             {
                 Console.WriteLine(@"provide at least two args: new filename and imagefilename or imagefileroot");
@@ -63,8 +63,9 @@ namespace ConvertImageToPDF
             }
             // begin
             SetLicense();
-            ocrEngine = OcrEngineManager.CreateEngine(OcrEngineType.Professional, false);
-            ocrEngine.Startup(null, null, null, null);
+            ocrEngine = OcrEngineManager.CreateEngine(OcrEngineType.Professional, true);
+            string workdirctory = null;// @"C:\LEADTOOLS19";
+            ocrEngine.Startup(null, null, workdirctory, null);
             RasterCodecs codecs;
             codecs = ocrEngine.RasterCodecsInstance;
             codecs.Options.RasterizeDocument.Load.XResolution = 300;
@@ -92,7 +93,7 @@ namespace ConvertImageToPDF
 
             }
             int filelength = files.ToArray<string>().Length;
-            Console.WriteLine("file count: " + filelength);
+            //Console.WriteLine("file count: " + filelength);
             //for (int i=0; i<filelength; i++)
             //{
             //    Console.WriteLine("the file: " + files[i]);
@@ -149,7 +150,7 @@ namespace ConvertImageToPDF
                     {
                         break;
                     }
-                    Console.WriteLine("Begin ocr engine ....." + files[index] + i * perImage + ".html");
+                    //Console.WriteLine("Begin ocr engine ....." + files[index] + i * perImage + ".html");
                     try
                     {
                         ocrDocument.Save(files[index] + i * perImage + ".html", Leadtools.Forms.DocumentWriters.DocumentFormat.Html, null);
@@ -157,7 +158,7 @@ namespace ConvertImageToPDF
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Error when saving image as pdf type" + e);
+                        //Console.WriteLine("Error when saving image as pdf type" + e);
                         // Console.ReadKey();
                     }
                     finally
@@ -276,6 +277,7 @@ namespace ConvertImageToPDF
 
             //下面只是注册License的其中一中方式
             byte[] licenseBuffer = ASCIIEncoding.ASCII.GetBytes(p_Lic.ToCharArray());
+            RasterSupport.ResetLicense();
             RasterSupport.SetLicense(licenseBuffer, p_Key);
         }
         private static bool IsPicture(string filePath)//filePath是文件的完整路径   
