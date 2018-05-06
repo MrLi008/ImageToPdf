@@ -46,8 +46,8 @@ namespace ConvertImageToPDF
         }
         private static void process(string[] args)
         {
-            // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
-            //args = new string[1] { @"1510583968646.jpg" };
+           // args = new string[2] { @"D:\ocrengine\test", @"D:\ocrengine\test" };
+           // args = new string[1] { @"1510583968646.jpg" };
             //args = new string[2]
             //{
             //    @"d:\ocrengine\test",
@@ -55,7 +55,7 @@ namespace ConvertImageToPDF
             //};
             for (int i = 0; i < args.Length; i++)
             {
-               // Console.WriteLine("args: " + args[i]);
+                Console.WriteLine("args: " + args[i]);
             }
             if (args.Length < 1)
             {
@@ -80,7 +80,7 @@ namespace ConvertImageToPDF
             List<string> files = new List<string>();
             if (args.Length > 1 && Directory.Exists(args[1]))
             {
-                 files = Directory.GetFiles(args[1], "*.JPG", SearchOption.AllDirectories).ToList<string>();
+                files = Directory.GetFiles(args[1], "*.JPG", SearchOption.AllDirectories).ToList<string>();
             }
             else 
             {
@@ -122,11 +122,11 @@ namespace ConvertImageToPDF
             //        Console.WriteLine("end.." + files[i] + ".pdf-----------------" + i);
             //    }
             //}
-            int perImage = 5;
+            int perImage = 1;
             try
             {
                 IOcrDocument ocrDocument;
-                for (int i = 0; i <= filelength / perImage; i++)
+                for (int i = 0; i < filelength / perImage; i++)
                 {
                     int index = 0;
                     int rest = filelength - i * perImage;
@@ -204,9 +204,13 @@ namespace ConvertImageToPDF
             try
             {
                 rasterCodecs = new RasterCodecs();
+                rasterCodecs.ThrowExceptionsOnInvalidImages = false;
                 rasterImage = rasterCodecs.Load(filename);
                 AutoBinarizeCommand command = new AutoBinarizeCommand();
                 command.Run(rasterImage);
+
+                AutoLineRemoveCommand commandLine = new AutoLineRemoveCommand();
+                commandLine.Run(rasterImage);
 
                 IOcrPage page = ocrDocument.Pages.AddPage(rasterImage, null);
                 if (page != null)
@@ -266,9 +270,9 @@ namespace ConvertImageToPDF
             string p_Lic, p_Key;
             //1、读取License文件
             //License文件夹被我放到Debug文件夹和Release文件夹里，可以根据需要变更文件路径
-            System.IO.TextReader reader = System.IO.File.OpenText(@"D:\ocrengine\License\full_license.key");
+            System.IO.TextReader reader = System.IO.File.OpenText(@"License\full_license.key");
             p_Key = reader.ReadLine();
-            reader = System.IO.File.OpenText(@"D:\ocrengine\License\full_license.lic");
+            reader = System.IO.File.OpenText(@"License\full_license.lic");
             p_Lic = reader.ReadToEnd();
 
             //下面只是注册License的其中一中方式
