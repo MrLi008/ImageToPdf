@@ -80,7 +80,11 @@ namespace ConvertImageToPDF
             List<string> files = new List<string>();
             if (args.Length > 1 && Directory.Exists(args[1]))
             {
-                files = Directory.GetFiles(args[1], "*.JPG", SearchOption.AllDirectories).ToList<string>();
+                string[] imgtypes = "*.BMP|*.JPG|*.GIF|*.PNG|*.TIF".Split('|');
+                for (int i = 0; i < imgtypes.Length; i++)
+                {
+                    files.AddRange( Directory.GetFiles(args[1], imgtypes[i], SearchOption.AllDirectories).ToList<string>());
+                }
             }
             else 
             {
