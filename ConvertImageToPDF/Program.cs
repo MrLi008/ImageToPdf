@@ -209,8 +209,8 @@ namespace ConvertImageToPDF
                 AutoBinarizeCommand command = new AutoBinarizeCommand();
                 command.Run(rasterImage);
 
-                AutoLineRemoveCommand commandLine = new AutoLineRemoveCommand();
-                commandLine.Run(rasterImage);
+                //AutoLineRemoveCommand commandLine = new AutoLineRemoveCommand();
+                //commandLine.Run(rasterImage);
 
                 IOcrPage page = ocrDocument.Pages.AddPage(rasterImage, null);
                 if (page != null)
