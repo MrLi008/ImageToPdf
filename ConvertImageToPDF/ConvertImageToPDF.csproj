@@ -85,10 +85,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>BA074FE9E9C8A40043BEAF5ECFC3F3AE93BB035F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A32050434416F18FD270461C9B4965554D5D386D</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ConvertImageToPDF_2_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ConvertImageToPDF_3_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -193,6 +193,7 @@
     <None Include="App.config" />
     <None Include="ConvertImageToPDF_1_TemporaryKey.pfx" />
     <None Include="ConvertImageToPDF_2_TemporaryKey.pfx" />
+    <None Include="ConvertImageToPDF_3_TemporaryKey.pfx" />
     <None Include="ConvertImageToPDF_TemporaryKey.pfx" />
     <None Include="Dockerfile" />
     <None Include="Properties\app.manifest" />
